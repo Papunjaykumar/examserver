@@ -1,5 +1,7 @@
 package com.exam.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,6 +10,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exam.config.JwtUtil;
 import com.exam.entity.JwtRequest;
 import com.exam.entity.JwtResponse;
+import com.exam.entity.User;
 import com.exam.service.impl.userDetailsServiceImpl;
 
 @RestController
+@CrossOrigin("*")
 public class AuthenticateController {
 	
 	@Autowired
@@ -57,6 +63,12 @@ public class AuthenticateController {
 		}catch(BadCredentialsException e) {
 			throw new Exception("Incalid Credentials "+e.getMessage());
 		}
+	}
+//	return the details of current user
+	@GetMapping("/current-user")
+	public User getCurrentUser(Principal principal) {
+		
+		return (User) this.userDetailsService.loadUserByUsername(principal.getName());
 	}
 
 }
