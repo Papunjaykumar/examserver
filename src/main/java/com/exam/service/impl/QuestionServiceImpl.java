@@ -46,4 +46,13 @@ public class QuestionServiceImpl implements QuestionService{
 		return this.questionRepo.findByQuiz(quiz);
 	}
 
+	@Override
+	public void deleteQuestion(Long questionId) {
+		// TODO Auto-generated method stub
+		Question question = new Question();
+		question.setQuesID(questionId);
+		this.questionRepo.delete(question);
+		
+	}
+
 }
