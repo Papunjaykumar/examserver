@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exam.entity.exam.Category;
 import com.exam.entity.exam.Quiz;
 import com.exam.service.QuizService;
 
@@ -54,6 +55,30 @@ public class QuizContoller {
 	@DeleteMapping("/{quizId}")
 	public void deleteQuiz(@PathVariable("quizId") Long quizId) {
 		this.quizService.deleteQuiz(quizId);
+	}
+	
+	@GetMapping("/category/{cid}")
+	public ResponseEntity<?> getQuizzesOfCategory(@PathVariable("cid")long cid){
+		Category c = new Category();
+		c.setCid(cid);
+		
+		return ResponseEntity.ok().body(this.quizService.getQuizzesOfCategory(c));
+	}
+	
+//	get active quizzes
+	@GetMapping("/active")
+	public ResponseEntity<?> getActiveQuizzes(){
+		
+		return ResponseEntity.ok().body(this.quizService.getActiveQuizzes());
+	}
+	
+//	get active quizzes of category
+	@GetMapping("/category/active/{cid}")
+	public ResponseEntity<?> getActiveQuizzesOfCategory(@PathVariable("cid")Long cid){
+		
+		Category c = new Category();
+		c.setCid(cid);
+		return ResponseEntity.ok().body(this.quizService.getActiveQuizzesOfCategory(c));
 	}
 
 }
