@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="question")
@@ -23,6 +24,8 @@ public class Question {
 	private String option3;
 	private String option4;
 	private String ans;
+	@Transient
+	private String givenAnswer;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Quiz quiz;
 	public Question() {
@@ -83,6 +86,22 @@ public class Question {
 	public void setQuiz(Quiz quiz) {
 		this.quiz = quiz;
 	}
+	public String getGivenAnswer() {
+		return givenAnswer;
+	}
+	public void setGivenAnswer(String givenAnswer) {
+		this.givenAnswer = givenAnswer;
+	}
+	@Override
+	public String toString() {
+		return "Question [quesID=" + quesID + ", content=" + content + ", image=" + image + ", option1=" + option1
+				+ ", option2=" + option2 + ", option3=" + option3 + ", option4=" + option4 + ", ans=" + ans
+				+ ", givenAnswer=" + givenAnswer + ", quiz=" + quiz + "]";
+	}
+	
+	
+	
+	
 	
 	
 

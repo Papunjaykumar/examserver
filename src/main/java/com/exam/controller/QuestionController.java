@@ -3,6 +3,7 @@ package com.exam.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +93,32 @@ public class QuestionController {
 	public void deleteQuestion(@PathVariable("questionId")Long questionId) {
 		
 		this.questionService.deleteQuestion(questionId);
+	}
+	
+//	eval quiz
+	@PostMapping("/eval-quiz")
+	public ResponseEntity<?> evalQuiz(@RequestBody List<Question> questions){
+		double marksGot=0;
+		int attempted=0;
+		int correctAnswer=0;
+		double singleMarks=Double.parseDouble(questions.get(0).getQuiz().getMaxMarks())/questions.size();
+		
+		for(Question q:questions) {
+//			single questions
+			Question question = this.questionService.getQuestion(q.getQuesID());
+			
+			if(question.getAns().equals(q.getGivenAnswer())) {
+//				correct answer
+				correctAnswer++;
+				marksGot+=singleMarks;
+			}
+			if(q.getGivenAnswer()!=null) {
+				attempted++; 
+			}
+		}
+		
+		Map<String, Number> map = Map.of("marksGot",marksGot,"correctAnswer",correctAnswer,"attempted",attempted);
+		return ResponseEntity.ok(map);
 	}
 
 }
