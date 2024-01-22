@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="question")
 public class Question {
@@ -74,12 +77,15 @@ public class Question {
 	public void setOption4(String option4) {
 		this.option4 = option4;
 	}
+	@JsonIgnore
 	public String getAns() {
 		return ans;
 	}
+	@JsonProperty("ans")
 	public void setAns(String ans) {
 		this.ans = ans;
 	}
+	
 	public Quiz getQuiz() {
 		return quiz;
 	}
