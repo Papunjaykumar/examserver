@@ -61,7 +61,7 @@ public class AuthenticateController {
 		}catch(DisabledException e) {
 			throw new Exception("USER DISABLED "+e.getMessage());
 		}catch(BadCredentialsException e) {
-			throw new Exception("Incalid Credentials "+e.getMessage());
+			throw new Exception("Invalid Credentials "+e.getMessage());
 		}
 	}
 //	return the details of current user
